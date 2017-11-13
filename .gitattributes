@@ -1,0 +1,3 @@
+*.js linguist-language=javacript
+*.css linguist-language=javacript
+*.html linguist-language=javacript
