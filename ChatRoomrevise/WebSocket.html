@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>webSocket</title>
+</head>
+<body>
+	<h1>Chat Room Revise</h1>
+	<input type="" name="" id="txt">
+	<button id="send">send</button>
+	<script type="text/javascript">
+
+		var WebSocket = new WebSocket('ws://localhost:3000')
+		
+		var send = document.getElementById('send')
+		var txt = document.getElementById('txt')
+
+		function showMessage(data,type){
+			var chatCtn = document.createElement('div')
+			chatCtn.innerHTML = data
+			if(type == 'enter'){
+				chatCtn.style.color = 'red'
+			} else if(type == 'leave'){
+				chatCtn.style.color = 'blue'
+			}
+			document.body.appendChild(chatCtn)
+		}
+
+		WebSocket.onopen = function(){
+			console.log('websocket open')
+			send.addEventListener('click',function(){
+				if(txt.value){
+					WebSocket.send(txt.value)
+				}
+			})
+		}
+		WebSocket.onclose = function(){
+			console.log('websocket close')
+		}
+		
+		WebSocket.onmessage= function(e){
+			console.log(e.data)
+			var mes = JSON.parse(e.data)
+			showMessage(mes.data,mes.type)
+		}
+		
+	</script>
+</body>
+</html>

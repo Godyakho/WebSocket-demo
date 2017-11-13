@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>webSocket</title>
+</head>
+<body>
+	<h1>Echo test</h1>
+	<input type="" name="" id="txt">
+	<button id="send">send</button>
+	<div id="res"></div>
+	<script type="text/javascript">
+		var WebSocket = new WebSocket('ws://localhost:3000')
+		var show = document.getElementById('res')
+		var send = document.getElementById('send')
+		var txt = document.getElementById('txt')
+		WebSocket.onopen = function(){
+			console.log('websocket open')
+			show.innerHTML = 'websocket connected'
+		}
+		WebSocket.onclose = function(){
+			console.log('websocket close')
+		}
+		WebSocket.onmessage= function(e){
+			console.log(e.data)
+			show.innerHTML = e.data
+		}
+		send.addEventListener('click',function(){
+			WebSocket.send(txt.value)
+		})
+	</script>
+</body>
+</html>
